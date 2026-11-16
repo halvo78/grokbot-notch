@@ -195,10 +195,25 @@ function ensureNotchSupportDir() {
 
 function initLaunchAuthToken() {
   const fromEnv = process.env.GROKBOT_NOTCH_AUTH_TOKEN;
-  const token =
-    typeof fromEnv === "string" && fromEnv.length >= 32
-      ? fromEnv
-      : crypto.randomBytes(32).toString("base64url");
+  const noDisk = process.env.GROKBOT_NOTCH_NO_DISK === "1";
+  if (typeof fromEnv === "string" && fromEnv.length >= 32) {
+    if (!noDisk) {
+      try {
+        ensureNotchSupportDir();
+        if (!fs.existsSync(AUTH_TOKEN_FILE)) {
+          fs.writeFileSync(AUTH_TOKEN_FILE, fromEnv, { mode: 0o600, encoding: "utf8" });
+        }
+      } catch (err) {
+        console.error("[gb-notch] Failed to write launch auth token file:", err.message);
+      }
+    }
+    return fromEnv;
+  }
+  if (noDisk || process.env.GROKBOT_NO_DISK_TOKENS === "1") {
+    console.error("[gb-notch] Refusing to mint a disk token: set GROKBOT_NOTCH_AUTH_TOKEN via 1Password (op run --env) with GROKBOT_NOTCH_NO_DISK=1.");
+    process.exit(78);
+  }
+  const token = crypto.randomBytes(32).toString("base64url");
   ensureNotchSupportDir();
   try {
     fs.writeFileSync(AUTH_TOKEN_FILE, token, { mode: 0o600, encoding: "utf8" });
