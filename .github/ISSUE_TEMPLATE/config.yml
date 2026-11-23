@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Production certification items
+    url: https://github.com/halvo78
+    about: Certification work is tracked with the "Certification item" template so every item carries its bar, evidence source, and status. Please use that template instead of a blank issue.
+  - name: Security reports
+    url: https://github.com/halvo78
+    about: Do not open a public issue for a vulnerability or a suspected credential exposure. Follow SECURITY.md in this repository instead.

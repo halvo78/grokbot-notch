@@ -1,0 +1,37 @@
+name: Audit finding
+description: A finding from a check or audit — a claim that failed verification, with both sides quoted.
+title: "[audit] "
+labels: ["audit:finding"]
+body:
+  - type: textarea
+    id: claim
+    attributes:
+      label: Claim as stated
+      description: The claim exactly as it appears in the register, report, or memory entry being audited, with its location.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence found
+      description: What the primary source (file, probe, hash, listing) actually shows. Quote it; do not paraphrase a summary of a summary.
+    validations:
+      required: true
+  - type: dropdown
+    id: verdict
+    attributes:
+      label: Verdict
+      options:
+        - FAIL — claim contradicted by primary evidence
+        - DIVERGENT — claim and evidence disagree in part (numbers differ)
+        - UNPROVEN — evidence missing or unreachable; claim not counted either way
+        - STALE — claim rested on a proof older than its freshness window
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: Correction
+      description: The erratum to append (corrections are appended, never silently edited into the original), or the re-probe that would settle it.
+    validations:
+      required: true

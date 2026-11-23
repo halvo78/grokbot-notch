@@ -1,0 +1,46 @@
+name: Bug report
+description: A concrete incorrect behaviour, with a reproducer. Name the wrong behaviour before proposing any fix.
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Estate rule: name the concrete incorrect behaviour first. A bug fix in
+        this estate ships a reproducer and a regression test named for the bug
+        that fails before the fix (workspace AGENTS.md §4).
+  - type: textarea
+    id: behaviour
+    attributes:
+      label: Incorrect behaviour (observed)
+      description: What actually happens, quoted from real output where possible.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+      description: What should happen instead, and what source says so (docs, spec, test, prior behaviour).
+    validations:
+      required: true
+  - type: textarea
+    id: reproducer
+    attributes:
+      label: Reproducer
+      description: Minimal steps or commands that reproduce it, with exit codes and timestamps (AEDT). If it cannot be reproduced, say so plainly and give the evidence that it happened.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Host, version/commit, and date of the observation.
+    validations:
+      required: true
+  - type: textarea
+    id: regression
+    attributes:
+      label: Regression test
+      description: Path of the regression test named for this bug (written before or with the fix), or "none — <reason>" if the cause is external/provider-side.
+    validations:
+      required: true
