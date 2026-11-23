@@ -1,0 +1,51 @@
+name: Certification item
+description: One item of a production-certification bar (mirrors the programme CERTIFICATION.md checklists).
+title: "[cert] "
+labels: ["cert:open"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        One issue per certification item. The item closes only on the evidence
+        named in its bar — never on assertion. Statuses mirror the programme
+        CERTIFICATION.md files: OPEN · MET · ELI-GATED · HOP-GATED.
+  - type: input
+    id: item
+    attributes:
+      label: Item id and programme
+      description: "e.g. Paperclip C2, Hermes C5 — plus the CERTIFICATION.md path it mirrors."
+    validations:
+      required: true
+  - type: textarea
+    id: bar
+    attributes:
+      label: The bar (checkable)
+      description: The exact, checkable condition that must hold for this item to read MET.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence_source
+    attributes:
+      label: Evidence source
+      description: Where the closing evidence lives (probe, register, read-back, battery record) and how it is produced.
+    validations:
+      required: true
+  - type: dropdown
+    id: status
+    attributes:
+      label: Current status
+      options:
+        - OPEN — agent-closable, not yet proven
+        - MET — proven on dated evidence
+        - ELI-GATED — needs Eli's tap or ruling
+        - HOP-GATED — needs the VM→MBP route
+        - PARTIAL — some sub-items proven, rest named in the body
+    validations:
+      required: true
+  - type: textarea
+    id: state
+    attributes:
+      label: Current state and gate
+      description: Dated state tonight, the named gate if any, and the exact next step that closes the item.
+    validations:
+      required: true
