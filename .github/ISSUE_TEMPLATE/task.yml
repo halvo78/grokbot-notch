@@ -1,0 +1,33 @@
+name: Task
+description: A bounded piece of work with a checkable outcome.
+title: "[task] "
+labels: ["task"]
+body:
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Outcome
+      description: What will be true when this is done, stated so it can be checked — not an activity list.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope and rails
+      description: What is in scope, what is explicitly out of scope, and any standing rails that bind this work (spend, approvals, gated surfaces).
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence of done
+      description: The dated proof that will close this task (probe output, read-back, test run, filed register). Green claims are timestamped and re-verified, never carried forward.
+    validations:
+      required: true
+  - type: input
+    id: link
+    attributes:
+      label: Linked record
+      description: Linear issue id, programme register, or ledger entry this work answers. No orphan work.
+    validations:
+      required: false
