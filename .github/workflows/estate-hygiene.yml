@@ -1,0 +1,32 @@
+# Estate standard — hygiene (gitleaks + dependency-review)
+# Agent-authored (GitHub 100/100 programme, Lane 3, 2026-11-23). Human merges.
+# Mirrors the gitleaks-scan / dependency-review workflows already running in
+# empire-mind/EmpireMind.ai and empire-mind/empiremind-site, but with the real
+# actions wired in (the copies in EmpireMind.ai are echo-only stubs).
+# Assisted-by: LLM [Muse]
+name: estate-hygiene
+
+on:
+  pull_request:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  gitleaks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Scan for leaked secrets (gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+
+  dependency-review:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Review dependency changes
+        uses: actions/dependency-review-action@v4
