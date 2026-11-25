@@ -1,0 +1,37 @@
+# Estate standard — Node CI skeleton
+# Agent-authored (GitHub 100/100 programme, Lane 3, 2026-11-23). Human merges.
+# Shape based on empire-mind/empiremind-site ci.yml (checkout, setup-node,
+# locked install, test) pinned to major-version actions.
+# Assisted-by: LLM [Muse]
+name: ci
+
+on:
+  pull_request:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci --ignore-scripts --no-audit --no-fund
+          else
+            npm install --ignore-scripts --no-audit --no-fund
+          fi
+      - name: Run tests (if a test script exists)
+        run: |
+          if node -e "process.exit(require('./package.json').scripts && require('./package.json').scripts.test ? 0 : 1)"; then
+            npm test
+          else
+            echo "No test script in package.json — skipping."
+          fi
